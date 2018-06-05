@@ -152,8 +152,8 @@ namespace VLC_Test
                 do
                 {
                     string[] FilterFileEntry = myFilterFile.ReadLine().Split(',');
-                    ActionList.Add(FilterFileEntry[0]);
-                    StartList.Add(FilterFileEntry[1]);
+                    StartList.Add(FilterFileEntry[0]);
+                    ActionList.Add(FilterFileEntry[1]);
                     EndList.Add(FilterFileEntry[2]);
 
                 } while (!myFilterFile.EndOfStream);
