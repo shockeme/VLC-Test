@@ -22,6 +22,7 @@ namespace VLC_Test
         int sizeoflist = 0;
         bool firsttime = true;
         bool listdone = false;
+        bool streaming = true;
 
         public Form1()
         {
@@ -43,6 +44,7 @@ namespace VLC_Test
             string temp; 
             string cddrive ="";
             int i;
+            streaming = false;
 
             DriveInfo[] dr = System.IO.DriveInfo.GetDrives();
             for (i = 0; i < dr.Count(); i++)
@@ -73,6 +75,7 @@ namespace VLC_Test
         private void button2_Click(object sender, EventArgs e)
         {
             // Start the timer
+            streaming = true;
             aTimer.Enabled = true;
             axVLCPlugin21.playlist.play();
         }
@@ -99,7 +102,7 @@ namespace VLC_Test
                 firsttime = false;
             }
             
-            if (axVLCPlugin21.input.title.track > 0 && listdone == false)
+            if ((axVLCPlugin21.input.title.track > 0 || streaming == true) && listdone == false)
             {
                 if (ActionList[listIndex] == "mute")
                 {
