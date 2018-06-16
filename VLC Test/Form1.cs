@@ -64,6 +64,8 @@ namespace VLC_Test
         // Load File
         private void button6_Click(object sender, EventArgs e)
         {
+
+            // https://isubtitles.in/
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -92,7 +94,9 @@ namespace VLC_Test
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            textBox2.Text = axVLCPlugin21.input.time.ToString(); // in miliseconds
+            //textBox2.Text = axVLCPlugin21.input.time.ToString(); // in miliseconds
+            textBox2.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
+
             textBox4.Text = axVLCPlugin21.input.title.track.ToString();
 
             // due to a timing glitch in VLC, once we hit the title track, we need to clear the input time
@@ -154,10 +158,27 @@ namespace VLC_Test
                 StreamReader myFilterFile = new StreamReader(openFileDialog1.FileName);
                 do
                 {
-                    string[] FilterFileEntry = myFilterFile.ReadLine().Split(',');
-                    StartList.Add(FilterFileEntry[0]);
-                    ActionList.Add(FilterFileEntry[1]);
-                    EndList.Add(FilterFileEntry[2]);
+                    //mute;00:01:52,840 --> 00:01:54,888
+                    string[] FilterFileEntry = myFilterFile.ReadLine().Split(';');
+                    ActionList.Add(FilterFileEntry[0]);                    
+                    string[] times = FilterFileEntry[1].Split(new [] { " --> " }, StringSplitOptions.None);
+
+                    times[0] = times[0].Substring(0, times[0].Length - 4);
+                    TimeSpan ts = TimeSpan.Parse(times[0]);
+                    StartList.Add(ts.TotalMilliseconds.ToString());
+
+                    times[1] = times[1].Substring(0, times[1].Length - 4);
+                    ts = TimeSpan.Parse(times[1]);
+                    EndList.Add(ts.TotalMilliseconds.ToString());
+
+                    //StartList.Add(times[0].ToString("HH:mm:ss tt"));
+                    //EndList.Add(times[1].ToString("HH:mm:ss tt"));
+
+
+
+                    //StartList.Add(FilterFileEntry[0]);
+                    //ActionList.Add(FilterFileEntry[1]);
+                    //EndList.Add(FilterFileEntry[2]);
 
                 } while (!myFilterFile.EndOfStream);
                 myFilterFile.Close();
