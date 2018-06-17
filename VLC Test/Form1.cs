@@ -57,6 +57,9 @@ namespace VLC_Test
             temp = "dvd:///" + temp1[0].ToLower() + "/";
             //temp = "dvd:///e:/";
             axVLCPlugin21.playlist.add(temp, null);
+
+            open_filter();
+
             aTimer.Enabled = true;
             axVLCPlugin21.playlist.play();
         }
@@ -71,15 +74,26 @@ namespace VLC_Test
             {
                 axVLCPlugin21.playlist.add("file:///" + openFileDialog1.FileName, openFileDialog1.SafeFileName, null);
             }
+            open_filter();
         }
 
         // Play File
         private void button2_Click(object sender, EventArgs e)
         {
-            // Start the timer
-            streaming = true;
-            aTimer.Enabled = true;
-            axVLCPlugin21.playlist.play();
+
+            if (axVLCPlugin21.playlist.isPlaying)
+            {
+                axVLCPlugin21.playlist.togglePause();
+                button2.Text = "Play";
+            }
+            else
+            {
+                // Start the timer
+                button2.Text = "Pause";
+                streaming = true;
+                aTimer.Enabled = true;
+                axVLCPlugin21.playlist.play();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -94,10 +108,7 @@ namespace VLC_Test
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            //textBox2.Text = axVLCPlugin21.input.time.ToString(); // in miliseconds
             textBox2.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
-
-            textBox4.Text = axVLCPlugin21.input.title.track.ToString();
 
             // due to a timing glitch in VLC, once we hit the title track, we need to clear the input time
             if (axVLCPlugin21.input.title.track > 0 && firsttime == true)
@@ -145,46 +156,9 @@ namespace VLC_Test
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            textBox4.Text = axVLCPlugin21.input.time.ToString();
-        }
-
         private void button7_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                StreamReader myFilterFile = new StreamReader(openFileDialog1.FileName);
-                do
-                {
-                    //mute;00:01:52,840 --> 00:01:54,888
-                    string[] FilterFileEntry = myFilterFile.ReadLine().Split(';');
-                    ActionList.Add(FilterFileEntry[0]);                    
-                    string[] times = FilterFileEntry[1].Split(new [] { " --> " }, StringSplitOptions.None);
-
-                    times[0] = times[0].Substring(0, times[0].Length - 4);
-                    TimeSpan ts = TimeSpan.Parse(times[0]);
-                    StartList.Add(ts.TotalMilliseconds.ToString());
-
-                    times[1] = times[1].Substring(0, times[1].Length - 4);
-                    ts = TimeSpan.Parse(times[1]);
-                    EndList.Add(ts.TotalMilliseconds.ToString());
-
-                    //StartList.Add(times[0].ToString("HH:mm:ss tt"));
-                    //EndList.Add(times[1].ToString("HH:mm:ss tt"));
-
-
-
-                    //StartList.Add(FilterFileEntry[0]);
-                    //ActionList.Add(FilterFileEntry[1]);
-                    //EndList.Add(FilterFileEntry[2]);
-
-                } while (!myFilterFile.EndOfStream);
-                myFilterFile.Close();
-
-                sizeoflist = ActionList.Count;
-            }
+            open_filter();
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -201,7 +175,48 @@ namespace VLC_Test
 
         private void button10_Click(object sender, EventArgs e)
         {
-            axVLCPlugin21.FullscreenEnabled = true;
+            axVLCPlugin21.video.toggleFullscreen();
+        }
+
+        private void open_filter()
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "( *.txt) |  *.txt";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                StreamReader myFilterFile = new StreamReader(openFileDialog1.FileName);
+                do
+                {
+                    //mute;00:01:52,840 --> 00:01:54,888
+                    string[] FilterFileEntry = myFilterFile.ReadLine().Split(';');
+                    ActionList.Add(FilterFileEntry[0]);
+                    string[] times = FilterFileEntry[1].Split(new[] { " --> " }, StringSplitOptions.None);
+
+                    times[0] = times[0].Substring(0, times[0].Length - 4);
+                    TimeSpan ts = TimeSpan.Parse(times[0]);
+                    StartList.Add(ts.TotalMilliseconds.ToString());
+
+                    times[1] = times[1].Substring(0, times[1].Length - 4);
+                    ts = TimeSpan.Parse(times[1]);
+                    EndList.Add(ts.TotalMilliseconds.ToString());
+                    
+                } while (!myFilterFile.EndOfStream);
+                myFilterFile.Close();
+
+                sizeoflist = ActionList.Count;
+            }
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            axVLCPlugin21.input.time -= 50000;
+            textBox2.Text = axVLCPlugin21.input.time.ToString();
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            axVLCPlugin21.input.time += 50000;
+            textBox2.Text = axVLCPlugin21.input.time.ToString();
         }
     }
 }
