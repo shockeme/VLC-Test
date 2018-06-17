@@ -198,5 +198,10 @@ namespace VLC_Test
             axVLCPlugin21.input.time += 5000;
             textBox2.Text = axVLCPlugin21.input.time.ToString();
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            axVLCPlugin21.FullscreenEnabled = true;
+        }
     }
 }
