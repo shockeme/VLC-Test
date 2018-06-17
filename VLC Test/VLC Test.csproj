@@ -7,7 +7,7 @@
     <ProjectGuid>{27D5FD46-5FFA-4C2E-BDB2-8729658320A7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>VLC_Test</RootNamespace>
-    <AssemblyName>VLC Test</AssemblyName>
+    <AssemblyName>VLC</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
