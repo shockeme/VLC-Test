@@ -60,6 +60,7 @@ namespace VLC_Test
 
             open_filter();
 
+            axVLCPlugin21.video.subtitle = 0;
             aTimer.Enabled = true;
             axVLCPlugin21.playlist.play();
         }
@@ -70,6 +71,7 @@ namespace VLC_Test
 
             // https://isubtitles.in/
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "( *.avi;*.mkv;*.mp4;*.flv) |  *.avi;*.mkv;*.mp4;*.flv";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 axVLCPlugin21.playlist.add("file:///" + openFileDialog1.FileName, openFileDialog1.SafeFileName, null);
@@ -91,6 +93,8 @@ namespace VLC_Test
                 // Start the timer
                 button2.Text = "Pause";
                 streaming = true;
+                
+
                 aTimer.Enabled = true;
                 axVLCPlugin21.playlist.play();
             }
@@ -99,6 +103,7 @@ namespace VLC_Test
         private void button3_Click(object sender, EventArgs e)
         {
             axVLCPlugin21.playlist.stop();
+            button2.Text = "Play";
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -110,7 +115,7 @@ namespace VLC_Test
         {
             textBox2.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
 
-            // due to a timing glitch in VLC, once we hit the title track, we need to clear the input time
+            // due to a timing glitch in VLC for DVDs, once we hit the title track, we need to clear the input time
             if (axVLCPlugin21.input.title.track > 0 && firsttime == true)
             {
                 axVLCPlugin21.input.time = 0;
@@ -217,6 +222,14 @@ namespace VLC_Test
         {
             axVLCPlugin21.input.time += 50000;
             textBox2.Text = axVLCPlugin21.input.time.ToString();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            if (axVLCPlugin21.subtitle.count > 0)
+             {
+                axVLCPlugin21.subtitle.track = 0;
+             }
         }
     }
 }

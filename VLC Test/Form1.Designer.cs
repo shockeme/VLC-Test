@@ -44,6 +44,7 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +55,7 @@
             this.axVLCPlugin21.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.axVLCPlugin21.Name = "axVLCPlugin21";
             this.axVLCPlugin21.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axVLCPlugin21.OcxState")));
-            this.axVLCPlugin21.Size = new System.Drawing.Size(478, 306);
+            this.axVLCPlugin21.Size = new System.Drawing.Size(436, 270);
             this.axVLCPlugin21.TabIndex = 0;
             // 
             // button1
@@ -184,11 +185,22 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click_1);
             // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(779, 360);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(126, 52);
+            this.button11.TabIndex = 21;
+            this.button11.Text = "Disable Subtitle";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 629);
+            this.Controls.Add(this.button11);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button10);
@@ -204,7 +216,7 @@
             this.Controls.Add(this.axVLCPlugin21);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
-            this.Text = "VLC Viewer";
+            this.Text = "VLC Viewer (v1.0)";
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -227,6 +239,7 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button11;
     }
 }
 
