@@ -38,15 +38,15 @@
             this.button6 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button12 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).BeginInit();
             this.SuspendLayout();
             // 
@@ -122,17 +122,6 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "Time Stamp";
             // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(779, 532);
-            this.button7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(126, 49);
-            this.button7.TabIndex = 15;
-            this.button7.Text = "Load Filter";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
             // button8
             // 
             this.button8.Location = new System.Drawing.Point(161, 532);
@@ -187,47 +176,55 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click_1);
             // 
-            // button11
-            // 
-            this.button11.Location = new System.Drawing.Point(779, 360);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(126, 52);
-            this.button11.TabIndex = 21;
-            this.button11.Text = "Disable Subtitle";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(779, 430);
+            this.textBox1.Location = new System.Drawing.Point(746, 532);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(125, 26);
+            this.textBox1.Size = new System.Drawing.Size(37, 26);
             this.textBox1.TabIndex = 22;
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(850, 142);
+            this.button12.Location = new System.Drawing.Point(868, 142);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(53, 37);
+            this.button12.Size = new System.Drawing.Size(35, 37);
             this.button12.TabIndex = 23;
             this.button12.Text = ">";
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(789, 535);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(85, 20);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "Title Count";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(775, 150);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 20);
+            this.label2.TabIndex = 25;
+            this.label2.Text = "Skip to title";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 629);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button11);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button6);
@@ -237,7 +234,7 @@
             this.Controls.Add(this.axVLCPlugin21);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
-            this.Text = "VLC Viewer (v1.0)";
+            this.Text = "VLC Viewer (v1.1)";
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -254,15 +251,15 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button11;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
