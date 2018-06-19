@@ -66,8 +66,8 @@ namespace VLC_Test
             label2.Visible = true;
             button12.Visible = true;
 
-            aTimer.Enabled = true;
-            axVLCPlugin21.playlist.play();
+            //aTimer.Enabled = true;
+            //axVLCPlugin21.playlist.play();
         }
 
         // Load File (*.avi, *.mkv, *.mp4, *.flv) - NOT DVDs
@@ -88,7 +88,6 @@ namespace VLC_Test
         // Play File
         private void button2_Click(object sender, EventArgs e)
         {
-
             if (axVLCPlugin21.playlist.isPlaying) // if the video is already playing, pause the video (and change the label to Play)
             {
                 axVLCPlugin21.playlist.togglePause();
@@ -125,7 +124,7 @@ namespace VLC_Test
             {
                 if (ActionList[listIndex] == "mute")
                 {
-                    if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex])) // see if the current time is after the star time but less than the end time.
+                    if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex])) // see if the current time is after the start time but less than the end time.
                         axVLCPlugin21.audio.mute = true;
 
                     if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex]))
@@ -152,13 +151,16 @@ namespace VLC_Test
 
         private void button8_Click(object sender, EventArgs e)
         {
-            axVLCPlugin21.input.time -= 5000;
+            if (axVLCPlugin21.input.time - 5000 < 0)
+                axVLCPlugin21.input.time = 0;
+            else
+                axVLCPlugin21.input.time -= 5000; // rewind 50 seconds (need to clamp to beginning of file)
             textBox2.Text = axVLCPlugin21.input.time.ToString();
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            axVLCPlugin21.input.time += 5000;
+            axVLCPlugin21.input.time += 5000; // need to clamp this when going beyond the movie time
             textBox2.Text = axVLCPlugin21.input.time.ToString();
         }
 
@@ -201,7 +203,10 @@ namespace VLC_Test
 
         private void button5_Click_1(object sender, EventArgs e)
         {
-            axVLCPlugin21.input.time -= 50000; // rewind 50 seconds (need to clamp to beginning of file)
+            if (axVLCPlugin21.input.time - 50000 < 0)
+                axVLCPlugin21.input.time = 0;
+            else
+                axVLCPlugin21.input.time -= 50000; // rewind 50 seconds (need to clamp to beginning of file)
             textBox2.Text = axVLCPlugin21.input.time.ToString();
         }
 
