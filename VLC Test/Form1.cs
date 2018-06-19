@@ -20,9 +20,7 @@ namespace VLC_Test
         List<string> EndList = new List<string>();
         int listIndex = 0;
         int sizeoflist = 0;
-        bool firsttime = true;
-        bool listdone = false;
-        bool streaming = true;
+        int TitleTrack = 0;
 
         public Form1()
         {
@@ -44,7 +42,6 @@ namespace VLC_Test
             string temp; 
             string cddrive ="";
             int i;
-            streaming = false;
 
             DriveInfo[] dr = System.IO.DriveInfo.GetDrives();
             for (i = 0; i < dr.Count(); i++)
@@ -60,12 +57,11 @@ namespace VLC_Test
 
             open_filter();
 
-            axVLCPlugin21.video.subtitle = 0;
             aTimer.Enabled = true;
             axVLCPlugin21.playlist.play();
         }
 
-        // Load File
+        // Load File (*.avi, *.mkv, *.mp4, *.flv) - NOT DVDs
         private void button6_Click(object sender, EventArgs e)
         {
 
@@ -77,6 +73,8 @@ namespace VLC_Test
                 axVLCPlugin21.playlist.add("file:///" + openFileDialog1.FileName, openFileDialog1.SafeFileName, null);
             }
             open_filter();
+            TitleTrack = 0; // force title track to 0 for files (DVDs have their own title tracks)
+            button12.Visible = false;
         }
 
         // Play File
@@ -92,9 +90,6 @@ namespace VLC_Test
             {
                 // Start the timer
                 button2.Text = "Pause";
-                streaming = true;
-                
-
                 aTimer.Enabled = true;
                 axVLCPlugin21.playlist.play();
             }
@@ -114,15 +109,9 @@ namespace VLC_Test
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
             textBox2.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
+            textBox1.Text = axVLCPlugin21.input.title.track.ToString();
 
-            // due to a timing glitch in VLC for DVDs, once we hit the title track, we need to clear the input time
-            if (axVLCPlugin21.input.title.track > 0 && firsttime == true)
-            {
-                axVLCPlugin21.input.time = 0;
-                firsttime = false;
-            }
-            
-            if ((axVLCPlugin21.input.title.track > 0 || streaming == true) && listdone == false)
+            if (axVLCPlugin21.input.title.track == TitleTrack)
             {
                 if (ActionList[listIndex] == "mute")
                 {
@@ -133,13 +122,6 @@ namespace VLC_Test
                     {
                         axVLCPlugin21.audio.mute = false;
                         listIndex++;
-                        if (listIndex >= sizeoflist)
-                        {
-                            //aTimer.Enabled = false;
-                            listdone = true;
-                            textBox2.Text = "End of List";
-                            return;
-                        }
                     }
                 }
                 else if (ActionList[listIndex] == "skip")
@@ -148,14 +130,6 @@ namespace VLC_Test
                     {
                         axVLCPlugin21.input.time = Int32.Parse(EndList[listIndex]);
                         listIndex++;
-
-                        if (listIndex >= sizeoflist)
-                        {
-                            //aTimer.Enabled = false;
-                            listdone = true;
-                            textBox2.Text = "End of List";
-                            return;
-                        }
                     }
                 }
             }
@@ -190,6 +164,11 @@ namespace VLC_Test
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 StreamReader myFilterFile = new StreamReader(openFileDialog1.FileName);
+
+                //string contents = myFilterFile.ReadToEnd();
+
+                TitleTrack = Int32.Parse(myFilterFile.ReadLine());
+
                 do
                 {
                     //mute;00:01:52,840 --> 00:01:54,888
@@ -227,9 +206,14 @@ namespace VLC_Test
         private void button11_Click(object sender, EventArgs e)
         {
             if (axVLCPlugin21.subtitle.count > 0)
-             {
                 axVLCPlugin21.subtitle.track = 0;
-             }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            // Jump to title track 1 if pressed
+            axVLCPlugin21.input.title.track = TitleTrack;
+            axVLCPlugin21.input.time = 0;
         }
     }
 }
