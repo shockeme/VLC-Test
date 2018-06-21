@@ -120,7 +120,9 @@ namespace VLC_Test
             textBox1.Text = axVLCPlugin21.input.title.track.ToString(); // want to see which title track we are current on
 
             if (axVLCPlugin21.subtitle.count > 0) // some files have the subtitle turned on.
-                axVLCPlugin21.subtitle.track = 0; // turn them off.            if (axVLCPlugin21.input.title.track == TitleTrack)
+                axVLCPlugin21.subtitle.track = 0; // turn them off.            
+
+            if (axVLCPlugin21.input.title.track == TitleTrack)
             {
                 if (ActionList[listIndex] == "mute")
                 {
@@ -130,7 +132,8 @@ namespace VLC_Test
                     if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex]))
                     {
                         axVLCPlugin21.audio.mute = false;
-                        listIndex++;
+                        if (listIndex < StartList.Count-1)
+                            listIndex++;
                     }
                 }
                 else if (ActionList[listIndex] == "skip")
@@ -138,7 +141,8 @@ namespace VLC_Test
                     if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex]))
                     {
                         axVLCPlugin21.input.time = Int32.Parse(EndList[listIndex]); // jump to the end of the time listed
-                        listIndex++;
+                        if (listIndex < StartList.Count-1)
+                            listIndex++;
                     }
                 }
             }

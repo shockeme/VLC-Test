@@ -234,7 +234,7 @@
             this.Controls.Add(this.axVLCPlugin21);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
-            this.Text = "VLC Viewer (v1.1)";
+            this.Text = "VLC Viewer (v1.2)";
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
