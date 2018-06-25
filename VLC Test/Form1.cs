@@ -65,9 +65,6 @@ namespace VLC_Test
             label1.Visible = true;
             label2.Visible = true;
             button12.Visible = true;
-
-            //aTimer.Enabled = true;
-            //axVLCPlugin21.playlist.play();
         }
 
         // Load File (*.avi, *.mkv, *.mp4, *.flv) - NOT DVDs
@@ -124,26 +121,27 @@ namespace VLC_Test
 
             if (axVLCPlugin21.input.title.track == TitleTrack)
             {
+
+                textBox3.Text = ActionList[listIndex];
+                textBox4.Text = TimeSpan.FromMilliseconds(Int32.Parse(StartList[listIndex])).ToString(@"hh\:mm\:ss\.fff");
+                textBox5.Text = TimeSpan.FromMilliseconds(Int32.Parse(EndList[listIndex])).ToString(@"hh\:mm\:ss\.fff");
+
                 if (ActionList[listIndex] == "mute")
                 {
                     if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex])) // see if the current time is after the start time but less than the end time.
                         axVLCPlugin21.audio.mute = true;
-
-                    if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex]))
-                    {
-                        axVLCPlugin21.audio.mute = false;
-                        if (listIndex < StartList.Count-1)
-                            listIndex++;
-                    }
                 }
                 else if (ActionList[listIndex] == "skip")
                 {
                     if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex]))
-                    {
                         axVLCPlugin21.input.time = Int32.Parse(EndList[listIndex]); // jump to the end of the time listed
-                        if (listIndex < StartList.Count-1)
-                            listIndex++;
-                    }
+                }
+
+                if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex])) // update to the next list if we skipped over it (unmute it even if not muted)
+                {
+                    axVLCPlugin21.audio.mute = false;
+                    if (listIndex < StartList.Count - 1)
+                        listIndex++;
                 }
             }
         }
@@ -160,12 +158,15 @@ namespace VLC_Test
             else
                 axVLCPlugin21.input.time -= 5000; // rewind 50 seconds (need to clamp to beginning of file)
             textBox2.Text = axVLCPlugin21.input.time.ToString();
+            listIndex = 0; // reset filter index
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
             axVLCPlugin21.input.time += 5000; // need to clamp this when going beyond the movie time
             textBox2.Text = axVLCPlugin21.input.time.ToString();
+            listIndex = 0; // reset filter index
+
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -212,12 +213,16 @@ namespace VLC_Test
             else
                 axVLCPlugin21.input.time -= 50000; // rewind 50 seconds (need to clamp to beginning of file)
             textBox2.Text = axVLCPlugin21.input.time.ToString();
+            listIndex = 0; // reset filter index
+
         }
 
         private void button4_Click_1(object sender, EventArgs e)
         {
             axVLCPlugin21.input.time += 50000; // forward wind 50 seconds (need to clamp to end of file)
             textBox2.Text = axVLCPlugin21.input.time.ToString();
+            listIndex = 0; // reset filter index
+
         }
 
         private void button12_Click(object sender, EventArgs e) // skip to DVD title screen (title track is determined by the first line of the filter file
