@@ -37,7 +37,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button6 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
@@ -53,6 +52,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,7 +70,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(839, 70);
+            this.button1.Location = new System.Drawing.Point(837, 71);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(126, 49);
@@ -101,7 +103,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(839, 12);
+            this.button6.Location = new System.Drawing.Point(837, 13);
             this.button6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(126, 48);
@@ -112,21 +114,11 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(460, 532);
+            this.textBox2.Location = new System.Drawing.Point(468, 533);
             this.textBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(145, 26);
+            this.textBox2.Size = new System.Drawing.Size(108, 26);
             this.textBox2.TabIndex = 8;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(481, 563);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 20);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Time Stamp";
             // 
             // button8
             // 
@@ -152,7 +144,7 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(623, 532);
+            this.button10.Location = new System.Drawing.Point(719, 532);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(101, 49);
             this.button10.TabIndex = 18;
@@ -184,14 +176,14 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(746, 532);
+            this.textBox1.Location = new System.Drawing.Point(835, 534);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(37, 26);
             this.textBox1.TabIndex = 22;
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(928, 128);
+            this.button12.Location = new System.Drawing.Point(926, 129);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(35, 37);
             this.button12.TabIndex = 23;
@@ -202,7 +194,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(789, 535);
+            this.label1.Location = new System.Drawing.Point(878, 537);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(85, 20);
             this.label1.TabIndex = 24;
@@ -211,7 +203,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(835, 136);
+            this.label2.Location = new System.Drawing.Point(833, 137);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(87, 20);
             this.label2.TabIndex = 25;
@@ -265,11 +257,39 @@
             this.label6.TabIndex = 31;
             this.label6.Text = "End Time";
             // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(583, 533);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(112, 26);
+            this.textBox6.TabIndex = 32;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(466, 564);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(109, 20);
+            this.label3.TabIndex = 33;
+            this.label3.Text = "Current Count";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(591, 564);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 20);
+            this.label7.TabIndex = 34;
+            this.label7.Text = "Remaining";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(993, 629);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBox6);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -285,7 +305,6 @@
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button3);
@@ -294,7 +313,7 @@
             this.Controls.Add(this.axVLCPlugin21);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
-            this.Text = "VLC Viewer (v1.2)";
+            this.Text = "VLC Viewer (v1.3)";
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -310,7 +329,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
@@ -326,6 +344,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label7;
     }
 }
 

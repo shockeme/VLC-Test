@@ -124,6 +124,7 @@ namespace VLC_Test
                 textBox3.Text = ActionList[listIndex];
                 textBox4.Text = TimeSpan.FromMilliseconds(Int32.Parse(StartList[listIndex])).ToString(@"hh\:mm\:ss\.fff"); // show the starting timestamp
                 textBox5.Text = TimeSpan.FromMilliseconds(Int32.Parse(EndList[listIndex])).ToString(@"hh\:mm\:ss\.fff"); // show the ending timestamp
+                textBox6.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.length - axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
 
                 if (ActionList[listIndex] == "mute")
                 {
