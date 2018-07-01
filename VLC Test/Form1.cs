@@ -30,12 +30,12 @@ namespace VLC_Test
 
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
-            aTimer.SynchronizingObject = this;
+            aTimer.SynchronizingObject = this; // synchronize the timer with this thread so we can display the timestamp from the movie
 
             // Have the timer fire repeated events (true is the default)
             aTimer.AutoReset = true;
 
-            button12.Visible = false;
+            button12.Visible = false; // don't show any of the DVD buttons or titles yet
             textBox1.Visible = false;
             label1.Visible = false;
             label2.Visible = false;
@@ -61,10 +61,10 @@ namespace VLC_Test
             axVLCPlugin21.playlist.add(temp, null);
 
             open_filter();
-            textBox1.Visible = true;
-            label1.Visible = true;
-            label2.Visible = true;
-            button12.Visible = true;
+            textBox1.Visible = true; // only show title count if playing DVDs
+            label1.Visible = true; // only show label for title count if playing DVDs
+            label2.Visible = true; // only show skip to title if playing DVDs
+            button12.Visible = true; // only allow skip to title if playing DVDs
         }
 
         // Load File (*.avi, *.mkv, *.mp4, *.flv) - NOT DVDs
@@ -78,7 +78,7 @@ namespace VLC_Test
 
             open_filter(); // open the filter file
             TitleTrack = 0; // force title track to 0 for files (DVDs have their own title tracks)
-            button12.Visible = false;
+            button12.Visible = false; // don't show DVD buttons when playing a file 
             button1.Visible = false;
         }
 
@@ -111,7 +111,7 @@ namespace VLC_Test
             axVLCPlugin21.playlist.togglePause(); // pause the video
         }
 
-        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e) // this is the routine that gets called every 20 msecs
         {
             textBox2.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
             textBox1.Text = axVLCPlugin21.input.title.track.ToString(); // want to see which title track we are current on
@@ -121,10 +121,9 @@ namespace VLC_Test
 
             if (axVLCPlugin21.input.title.track == TitleTrack)
             {
-
                 textBox3.Text = ActionList[listIndex];
-                textBox4.Text = TimeSpan.FromMilliseconds(Int32.Parse(StartList[listIndex])).ToString(@"hh\:mm\:ss\.fff");
-                textBox5.Text = TimeSpan.FromMilliseconds(Int32.Parse(EndList[listIndex])).ToString(@"hh\:mm\:ss\.fff");
+                textBox4.Text = TimeSpan.FromMilliseconds(Int32.Parse(StartList[listIndex])).ToString(@"hh\:mm\:ss\.fff"); // show the starting timestamp
+                textBox5.Text = TimeSpan.FromMilliseconds(Int32.Parse(EndList[listIndex])).ToString(@"hh\:mm\:ss\.fff"); // show the ending timestamp
 
                 if (ActionList[listIndex] == "mute")
                 {
@@ -214,7 +213,6 @@ namespace VLC_Test
                 axVLCPlugin21.input.time -= 50000; // rewind 50 seconds (need to clamp to beginning of file)
             textBox2.Text = axVLCPlugin21.input.time.ToString();
             listIndex = 0; // reset filter index
-
         }
 
         private void button4_Click_1(object sender, EventArgs e)
@@ -222,7 +220,6 @@ namespace VLC_Test
             axVLCPlugin21.input.time += 50000; // forward wind 50 seconds (need to clamp to end of file)
             textBox2.Text = axVLCPlugin21.input.time.ToString();
             listIndex = 0; // reset filter index
-
         }
 
         private void button12_Click(object sender, EventArgs e) // skip to DVD title screen (title track is determined by the first line of the filter file
