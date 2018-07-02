@@ -21,6 +21,7 @@ namespace VLC_Test
         int listIndex = 0;
         int sizeoflist = 0;
         int TitleTrack = 0;
+        bool Skipped = false;
 
         public Form1()
         {
@@ -39,7 +40,6 @@ namespace VLC_Test
             textBox1.Visible = false;
             label1.Visible = false;
             label2.Visible = false;
-
         }
 
         // Load and Play DVD 
@@ -134,10 +134,14 @@ namespace VLC_Test
                 else if (ActionList[listIndex] == "skip")
                 {
                     if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex]))
+                    {
                         axVLCPlugin21.input.time = Int32.Parse(EndList[listIndex]); // jump to the end of the time listed
+                        listIndex++;
+                        return;
+                    }
                 }
 
-                if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex])) // update to the next list if we skipped over it (unmute it even if not muted)
+                if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex]) && Skipped == false) // update to the next list if we skipped over it (unmute it even if not muted)
                 {
                     axVLCPlugin21.audio.mute = false;
                     if (listIndex < StartList.Count - 1)
