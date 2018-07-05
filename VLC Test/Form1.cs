@@ -18,10 +18,13 @@ namespace VLC_Test
         List<string> ActionList = new List<string>();
         List<string> StartList = new List<string>();
         List<string> EndList = new List<string>();
+        List<string> StartTime = new List<string>();
+        List<string> EndTime = new List<string>();
+        List<string> Action = new List<string>();
         int listIndex = 0;
         int sizeoflist = 0;
         int TitleTrack = 0;
-        bool Skipped = false;
+        bool filtersOn = true;
 
         public Form1()
         {
@@ -40,6 +43,16 @@ namespace VLC_Test
             textBox1.Visible = false;
             label1.Visible = false;
             label2.Visible = false;
+
+            button7.Enabled = true;
+            button11.Enabled = false;
+            checkBox1.Visible = false;
+            checkBox2.Visible = false;
+            button7.Visible = false;
+            button11.Visible = false;
+            button13.Visible = false;
+            textBox7.Visible = false;
+            textBox8.Visible = false;
         }
 
         // Load and Play DVD 
@@ -141,7 +154,7 @@ namespace VLC_Test
                     }
                 }
 
-                if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex]) && Skipped == false) // update to the next list if we skipped over it (unmute it even if not muted)
+                if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex])) // update to the next list if we skipped over it (unmute it even if not muted)
                 {
                     axVLCPlugin21.audio.mute = false;
                     if (listIndex < StartList.Count - 1)
@@ -170,7 +183,6 @@ namespace VLC_Test
             axVLCPlugin21.input.time += 5000; // need to clamp this when going beyond the movie time
             textBox2.Text = axVLCPlugin21.input.time.ToString();
             listIndex = 0; // reset filter index
-
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -215,7 +227,8 @@ namespace VLC_Test
             if (axVLCPlugin21.input.time - 50000 < 0)
                 axVLCPlugin21.input.time = 0;
             else
-                axVLCPlugin21.input.time -= 50000; // rewind 50 seconds (need to clamp to beginning of file)
+                axVLCPlugin21.input.time -= 50000; // rewind 50 seconds (need to clamp to beginning of file)            
+
             textBox2.Text = axVLCPlugin21.input.time.ToString();
             listIndex = 0; // reset filter index
         }
@@ -232,6 +245,83 @@ namespace VLC_Test
             // Jump to title track 1 if pressed
             axVLCPlugin21.input.title.track = TitleTrack;
             axVLCPlugin21.input.time = 0;
+        }
+
+        private void button7_Click_1(object sender, EventArgs e)
+        {
+            StartTime.Add(TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff"));  
+            textBox7.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
+            button11.Enabled = true;
+            button7.Enabled = false;
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            textBox8.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
+            EndTime.Add(TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff"));
+            if (checkBox1.Checked == true)
+                Action.Add("mute");
+            else
+                Action.Add("skip");
+            button7.Enabled = true;
+            button11.Enabled = false;
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            int i;
+            String Message = null;
+            for (i = 0; i < EndTime.Count; i++)
+            {
+                Message += Action[i] + ";" + StartTime[i] + " --> " + EndTime[i] + "\r\n";
+            }
+            //MessageBox.Show(Message,"Pulled from VLC Test - please edit file and put values in time order!");
+            //form3.textbox1.Text = Message;
+            Form2 form2 = new Form2(Message);
+            form2.Show();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked == true)
+                checkBox2.Checked = false;
+            else
+                checkBox2.Checked = true;
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked == true)
+                checkBox1.Checked = false;
+            else
+                checkBox1.Checked = true;
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (filtersOn == true)
+            {
+                checkBox1.Visible = true;
+                checkBox2.Visible = true;
+                button7.Visible = true;
+                button11.Visible = true;
+                button13.Visible = true;
+                textBox7.Visible = true;
+                textBox8.Visible = true;
+                button14.Text = "Close Editor";
+                filtersOn = false;
+            } else
+            {
+                checkBox1.Visible = false;
+                checkBox2.Visible = false;
+                button7.Visible = false;
+                button11.Visible = false;
+                button13.Visible = false;
+                textBox7.Visible = false;
+                textBox8.Visible = false;
+                button14.Text = "Create Filters";
+                filtersOn = true;
+            }
         }
     }
 }

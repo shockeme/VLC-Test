@@ -55,6 +55,14 @@
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.button13 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.button14 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).BeginInit();
             this.SuspendLayout();
             // 
@@ -211,21 +219,21 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(833, 240);
+            this.textBox3.Location = new System.Drawing.Point(833, 200);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(130, 26);
             this.textBox3.TabIndex = 26;
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(833, 272);
+            this.textBox4.Location = new System.Drawing.Point(833, 232);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(130, 26);
             this.textBox4.TabIndex = 27;
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(833, 304);
+            this.textBox5.Location = new System.Drawing.Point(833, 264);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(130, 26);
             this.textBox5.TabIndex = 28;
@@ -233,7 +241,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(730, 240);
+            this.label4.Location = new System.Drawing.Point(730, 200);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(90, 20);
             this.label4.TabIndex = 29;
@@ -242,7 +250,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(730, 272);
+            this.label5.Location = new System.Drawing.Point(730, 232);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 20);
             this.label5.TabIndex = 30;
@@ -251,7 +259,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(730, 304);
+            this.label6.Location = new System.Drawing.Point(730, 264);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(76, 20);
             this.label6.TabIndex = 31;
@@ -282,11 +290,94 @@
             this.label7.TabIndex = 34;
             this.label7.Text = "Remaining";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(731, 400);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(100, 32);
+            this.button7.TabIndex = 35;
+            this.button7.Text = "Mark Start";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click_1);
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(731, 441);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(100, 32);
+            this.button11.TabIndex = 36;
+            this.button11.Text = "Mark End";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(837, 403);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(124, 26);
+            this.textBox7.TabIndex = 37;
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(837, 441);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(124, 26);
+            this.textBox8.TabIndex = 38;
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(882, 480);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(78, 31);
+            this.button13.TabIndex = 39;
+            this.button13.Text = "Done";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Location = new System.Drawing.Point(734, 370);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(86, 24);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "Mute";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(837, 370);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(66, 24);
+            this.checkBox2.TabIndex = 41;
+            this.checkBox2.Text = "Skip";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(731, 313);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(141, 41);
+            this.button14.TabIndex = 42;
+            this.button14.Text = "Create Filters";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(993, 629);
+            this.Controls.Add(this.button14);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.button13);
+            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.textBox7);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox6);
@@ -347,6 +438,14 @@
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Button button14;
     }
 }
 
