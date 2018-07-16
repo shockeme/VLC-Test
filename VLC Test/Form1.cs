@@ -11,7 +11,7 @@ using System.Timers;
 using System.IO;
 
 namespace VLC_Test
-{
+{   
     public partial class Form1 : Form
     {
         private static System.Timers.Timer aTimer;
@@ -53,6 +53,7 @@ namespace VLC_Test
             button13.Visible = false;
             textBox7.Visible = false;
             textBox8.Visible = false;
+
         }
 
         // Load and Play DVD 
@@ -83,6 +84,16 @@ namespace VLC_Test
         // Load File (*.avi, *.mkv, *.mp4, *.flv) - NOT DVDs
         private void button6_Click(object sender, EventArgs e)
         {
+            // if a video is not already loaded (ie. not the first time), then we want to clear out the filters and the movie.
+            if (axVLCPlugin21.playlist.itemCount > 0)
+            {
+                axVLCPlugin21.playlist.stop();
+                axVLCPlugin21.playlist.items.clear();
+                ActionList.Clear();
+                StartList.Clear();
+                EndList.Clear();                
+            }
+
             // https://isubtitles.in/ place to download the SRT files which contain the subtitles.  Use these files to create filter files
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "( *.avi;*.mkv;*.mp4;*.flv) |  *.avi;*.mkv;*.mp4;*.flv"; // grab only movie files
@@ -100,7 +111,7 @@ namespace VLC_Test
         {
             if (axVLCPlugin21.playlist.isPlaying) // if the video is already playing, pause the video (and change the label to Play)
             {
-                axVLCPlugin21.playlist.togglePause();
+                axVLCPlugin21.playlist.pause();
                 button2.Text = "Play";
             } 
             else  // if the movie isn't playing, start it up, or start it again from a pause. 
@@ -114,14 +125,14 @@ namespace VLC_Test
 
         private void button3_Click(object sender, EventArgs e)
         {
-            axVLCPlugin21.playlist.stop(); // stop the video
+            axVLCPlugin21.playlist.pause(); // stop the video - for some reason when I use .stop(), the system crashes on a 2nd video.  Seems to work fine with .pause() though
             button2.Text = "Play";
             button1.Visible = true;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            axVLCPlugin21.playlist.togglePause(); // pause the video
+            axVLCPlugin21.playlist.pause(); // pause the video
         }
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e) // this is the routine that gets called every 20 msecs
@@ -208,12 +219,12 @@ namespace VLC_Test
                     string[] times = FilterFileEntry[1].Split(new[] { " --> " }, StringSplitOptions.None); // split based on the --> to split the start and end times
 
                     times[0] = times[0].Substring(0, times[0].Length - 4); // remove the last 4 characters of the string as we don't really need them 
-                    TimeSpan ts = TimeSpan.Parse(times[0]); // convert the numbers to a time
-                    StartList.Add(ts.TotalMilliseconds.ToString()); // add the start time to the list
+                    TimeSpan ts1 = TimeSpan.Parse(times[0]); // convert the numbers to a time
+                    StartList.Add(ts1.TotalMilliseconds.ToString()); // add the start time to the list
 
                     times[1] = times[1].Substring(0, times[1].Length - 4);
-                    ts = TimeSpan.Parse(times[1]);
-                    EndList.Add(ts.TotalMilliseconds.ToString()); // add the end time to the list
+                    TimeSpan ts2 = TimeSpan.Parse(times[1]);
+                    EndList.Add(ts2.TotalMilliseconds.ToString()); // add the end time to the list
                     
                 } while (!myFilterFile.EndOfStream);
                 myFilterFile.Close();
@@ -275,8 +286,8 @@ namespace VLC_Test
             {
                 Message += Action[i] + ";" + StartTime[i] + " --> " + EndTime[i] + "\r\n";
             }
-            //MessageBox.Show(Message,"Pulled from VLC Test - please edit file and put values in time order!");
-            //form3.textbox1.Text = Message;
+            
+            //Please edit filter file and put values in time order!
             Form2 form2 = new Form2(Message);
             form2.Show();
         }
@@ -299,7 +310,7 @@ namespace VLC_Test
 
         private void button14_Click(object sender, EventArgs e)
         {
-            if (filtersOn == true)
+            if (filtersOn == true) // show filter editing panel
             {
                 checkBox1.Visible = true;
                 checkBox2.Visible = true;
@@ -310,8 +321,7 @@ namespace VLC_Test
                 textBox8.Visible = true;
                 button14.Text = "Close Editor";
                 filtersOn = false;
-            } else
-            {
+            } else { // close filter editing panel
                 checkBox1.Visible = false;
                 checkBox2.Visible = false;
                 button7.Visible = false;
