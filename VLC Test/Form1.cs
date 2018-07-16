@@ -125,7 +125,7 @@ namespace VLC_Test
 
         private void button3_Click(object sender, EventArgs e)
         {
-            axVLCPlugin21.playlist.pause(); // stop the video - for some reason when I use .stop(), the system crashes on a 2nd video.  Seems to work fine with .pause() though
+            axVLCPlugin21.playlist.stop(); // stop the video - for some reason when I use .stop(), the system crashes on a 2nd video. 
             button2.Text = "Play";
             button1.Visible = true;
         }
