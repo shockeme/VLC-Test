@@ -25,6 +25,7 @@ namespace VLC_Test
         int sizeoflist = 0;
         int TitleTrack = 0;
         bool filtersOn = true;
+        int delay = 0;
 
         public Form1()
         {
@@ -53,7 +54,6 @@ namespace VLC_Test
             button13.Visible = false;
             textBox7.Visible = false;
             textBox8.Visible = false;
-
         }
 
         // Load and Play DVD 
@@ -75,10 +75,21 @@ namespace VLC_Test
             axVLCPlugin21.playlist.add(temp, null);
 
             open_filter();
+
+            string val = "";
+            ShowInputDialog(ref val);
+
+            delay = Int32.Parse(val) * 1000;
+            textBox9.Text = delay.ToString();
+
             textBox1.Visible = true; // only show title count if playing DVDs
             label1.Visible = true; // only show label for title count if playing DVDs
             label2.Visible = true; // only show skip to title if playing DVDs
             button12.Visible = true; // only allow skip to title if playing DVDs
+            textBox9.Visible = true;
+            label8.Visible = true;
+
+            //delay = Int32.Parse(textBox9.Text) * 1000;
         }
 
         // Load File (*.avi, *.mkv, *.mp4, *.flv) - NOT DVDs
@@ -96,7 +107,7 @@ namespace VLC_Test
 
             // https://isubtitles.in/ place to download the SRT files which contain the subtitles.  Use these files to create filter files
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "( *.avi;*.mkv;*.mp4;*.flv) |  *.avi;*.mkv;*.mp4;*.flv"; // grab only movie files
+            openFileDialog1.Filter = "( *.avi;*.mkv;*.mp4;*.flv,*.m4v) |  *.avi;*.mkv;*.mp4;*.flv;*.m4v"; // grab only movie files
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 axVLCPlugin21.playlist.add("file:///" + openFileDialog1.FileName, openFileDialog1.SafeFileName, null);
 
@@ -104,6 +115,9 @@ namespace VLC_Test
             TitleTrack = 0; // force title track to 0 for files (DVDs have their own title tracks)
             button12.Visible = false; // don't show DVD buttons when playing a file 
             button1.Visible = false;
+            textBox9.Visible = false;
+            label8.Visible = false;
+
         }
 
         // Play File
@@ -146,18 +160,18 @@ namespace VLC_Test
             if (axVLCPlugin21.input.title.track == TitleTrack)
             {
                 textBox3.Text = ActionList[listIndex];
-                textBox4.Text = TimeSpan.FromMilliseconds(Int32.Parse(StartList[listIndex])).ToString(@"hh\:mm\:ss\.fff"); // show the starting timestamp
-                textBox5.Text = TimeSpan.FromMilliseconds(Int32.Parse(EndList[listIndex])).ToString(@"hh\:mm\:ss\.fff"); // show the ending timestamp
+                textBox4.Text = TimeSpan.FromMilliseconds(Int32.Parse(StartList[listIndex]) + delay).ToString(@"hh\:mm\:ss\.fff"); // show the starting timestamp
+                textBox5.Text = TimeSpan.FromMilliseconds(Int32.Parse(EndList[listIndex]) + delay).ToString(@"hh\:mm\:ss\.fff"); // show the ending timestamp
                 textBox6.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.length - axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
 
                 if (ActionList[listIndex] == "mute")
                 {
-                    if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex])) // see if the current time is after the start time but less than the end time.
+                    if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) + delay && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex]) + delay) // see if the current time is after the start time but less than the end time.
                         axVLCPlugin21.audio.mute = true;
                 }
                 else if (ActionList[listIndex] == "skip")
                 {
-                    if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex]))
+                    if (axVLCPlugin21.input.time > Int32.Parse(StartList[listIndex]) + delay && axVLCPlugin21.input.time < Int32.Parse(EndList[listIndex]) + delay)
                     {
                         axVLCPlugin21.input.time = Int32.Parse(EndList[listIndex]); // jump to the end of the time listed
                         listIndex++;
@@ -165,7 +179,7 @@ namespace VLC_Test
                     }
                 }
 
-                if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex])) // update to the next list if we skipped over it (unmute it even if not muted)
+                if (axVLCPlugin21.input.time > Int32.Parse(EndList[listIndex]) + delay) // update to the next list if we skipped over it (unmute it even if not muted)
                 {
                     axVLCPlugin21.audio.mute = false;
                     if (listIndex < StartList.Count - 1)
@@ -321,7 +335,10 @@ namespace VLC_Test
                 textBox8.Visible = true;
                 button14.Text = "Close Editor";
                 filtersOn = false;
-            } else { // close filter editing panel
+                textBox9.Visible = true;
+                label8.Visible = true;
+            }
+            else { // close filter editing panel
                 checkBox1.Visible = false;
                 checkBox2.Visible = false;
                 button7.Visible = false;
@@ -331,7 +348,48 @@ namespace VLC_Test
                 textBox8.Visible = false;
                 button14.Text = "Create Filters";
                 filtersOn = true;
-            }
+                textBox9.Visible = false;
+                label8.Visible = false;
+             }
+        }
+
+        private static DialogResult ShowInputDialog(ref string input)
+        {
+            System.Drawing.Size size = new System.Drawing.Size(200, 70);
+            Form inputBox = new Form();
+
+            inputBox.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            inputBox.ClientSize = size;
+            inputBox.Text = "DVD Delay Time (in seconds)";
+
+            System.Windows.Forms.TextBox textBox = new TextBox();
+            textBox.Size = new System.Drawing.Size(size.Width - 10, 23);
+            textBox.Location = new System.Drawing.Point(5, 5);
+            textBox.Text = input;
+            inputBox.Controls.Add(textBox);
+
+            Button okButton = new Button();
+            okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            okButton.Name = "okButton";
+            okButton.Size = new System.Drawing.Size(75, 23);
+            okButton.Text = "&OK";
+            okButton.Location = new System.Drawing.Point(size.Width - 80 - 80, 39);
+            inputBox.Controls.Add(okButton);
+
+            Button cancelButton = new Button();
+            cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new System.Drawing.Size(75, 23);
+            cancelButton.Text = "&Cancel";
+            cancelButton.Location = new System.Drawing.Point(size.Width - 80, 39);
+            inputBox.Controls.Add(cancelButton);
+
+            inputBox.AcceptButton = okButton;
+            inputBox.CancelButton = cancelButton;
+
+            DialogResult result = inputBox.ShowDialog();
+            input = textBox.Text;
+            return result;
         }
     }
 }
