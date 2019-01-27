@@ -25,6 +25,7 @@ namespace VLC_Test
         int sizeoflist = 0;
         int TitleTrack = 0;
         bool filtersOn = true;
+        bool subtitles = false;
         int delay = 0;
 
         public Form1()
@@ -44,6 +45,7 @@ namespace VLC_Test
             textBox1.Visible = false;
             label1.Visible = false;
             label2.Visible = false;
+            button15.Visible = true;
 
             button7.Enabled = true;
             button11.Enabled = false;
@@ -76,20 +78,12 @@ namespace VLC_Test
 
             open_filter();
 
-            string val = "";
-            ShowInputDialog(ref val);
-
-            delay = Int32.Parse(val) * 1000;
-            textBox9.Text = delay.ToString();
-
             textBox1.Visible = true; // only show title count if playing DVDs
             label1.Visible = true; // only show label for title count if playing DVDs
             label2.Visible = true; // only show skip to title if playing DVDs
             button12.Visible = true; // only allow skip to title if playing DVDs
             textBox9.Visible = true;
             label8.Visible = true;
-
-            //delay = Int32.Parse(textBox9.Text) * 1000;
         }
 
         // Load File (*.avi, *.mkv, *.mp4, *.flv) - NOT DVDs
@@ -153,9 +147,6 @@ namespace VLC_Test
         {
             textBox2.Text = TimeSpan.FromMilliseconds(axVLCPlugin21.input.time).ToString(@"hh\:mm\:ss\.fff");
             textBox1.Text = axVLCPlugin21.input.title.track.ToString(); // want to see which title track we are current on
-
-            if (axVLCPlugin21.subtitle.count > 0) // some files have the subtitle turned on.
-                axVLCPlugin21.subtitle.track = 0; // turn them off.            
 
             if (axVLCPlugin21.input.title.track == TitleTrack)
             {
@@ -390,6 +381,23 @@ namespace VLC_Test
             DialogResult result = inputBox.ShowDialog();
             input = textBox.Text;
             return result;
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            //if (axVLCPlugin21.video.subtitle > -1)
+           if (subtitles == false)
+           {
+                axVLCPlugin21.subtitle.track = 1;
+                button15.Text = "Disable Subtitles";
+                subtitles = true;
+            }
+            else
+            {
+                axVLCPlugin21.subtitle.track = 0;
+                button15.Text = "Enable Subtitles";
+                subtitles = false;
+            }
         }
     }
 }

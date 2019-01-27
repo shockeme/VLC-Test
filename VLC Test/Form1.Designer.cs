@@ -65,6 +65,7 @@
             this.button14 = new System.Windows.Forms.Button();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.button15 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).BeginInit();
             this.SuspendLayout();
             // 
@@ -384,11 +385,22 @@
             this.label8.TabIndex = 44;
             this.label8.Text = "Delay (sec)";
             // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(865, 448);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(88, 56);
+            this.button15.TabIndex = 45;
+            this.button15.Text = "Enable Subtitles";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(998, 623);
+            this.Controls.Add(this.button15);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox9);
             this.Controls.Add(this.button14);
@@ -469,6 +481,7 @@
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button15;
     }
 }
 
